@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360 Degree VR View</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <style>
+        /* Style the arrow buttons */
+        .arrow-button {
+            position: absolute;
+            color: aliceblue;
+            background-color: rgba(255, 255, 255, 0);
+            border: none;
+            cursor: pointer;
+            font-size: 24px; /* Increased font size for larger buttons */
+            padding: 25px;   /* Added padding for larger buttons */
+        }
+        #front {
+            top: 75%; /* Moved slightly upwards */
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #back {
+            top: 78%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(180deg);
+            margin-top: 50px;
+        }
+        #left {
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            margin-left: -50px;
+        }
+        #right {
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+            margin-left: 50px;
+        }
+        /* Text overlay style */
+        .text-overlay {
+            position: absolute;
+            border-radius: 20px;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            box-sizing: border-box;
+            width: calc(100% - 60px); /* Adjust width to account for both left and right margins */
+            margin: 0 auto; /* Center the text overlay horizontally */
+        }
+    </style>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <img id="a" src="a.jpeg"/>
+            <img id="b" src="b.jpeg"/>
+            <img id="c" src="c.jpeg"/>
+            <img id="d" src="d.jpeg"/>
+            <img id="e" src="e.jpeg"/>
+        </a-assets>
+        <a-sky id="sky" src="#a" rotation="0 -90 0"></a-sky>
+        <a-entity position="0 0 1.5">
+            <a-camera></a-camera>
+        </a-entity>
+    </a-scene>
+    <button id="front" class="arrow-button">▲</button>
+    <button id="back" class="arrow-button">▲</button>
+    <button id="left" class="arrow-button">▲</button>
+    <button id="right" class="arrow-button">▲</button>
+    <div id="text-overlay" class="text-overlay">A Symbol of Colonial Legacy<br>The Gateway of India, located in Mumbai, was built during the British Raj and stands as a symbol of colonial legacy in India. Completed in 1924, it was initially constructed to commemorate the visit of King George V and Queen Mary to India in 1911. The imposing structure is a blend of Hindu and Muslim architectural styles, reflecting the diverse cultural influences that have shaped India's history.</div>    
+    <script>
+        const connections = {
+            a: { front: 'b', back: 'e', left: 'c', right: 'd', text: 'A Symbol of Colonial Legacy<br>The Gateway of India, located in Mumbai, was built during the British Raj and stands as a symbol of colonial legacy in India. Completed in 1924, it was initially constructed to commemorate the visit of King George V and Queen Mary to India in 1911. The imposing structure is a blend of Hindu and Muslim architectural styles, reflecting the diverse cultural influences that have shaped India\'s history.' },
+            b: { front: null, back: 'a', left: null, right: null, text: 'Architectural Marvel by the Arabian Sea<br>Perched on the waterfront of the Arabian Sea, the Gateway of India is an architectural marvel that has become synonymous with Mumbai\'s identity. The structure, made from yellow basalt and reinforced concrete, features intricate latticework and arched doorways, creating a majestic entrance to the city. Its design draws inspiration from the triumphal arches of ancient Rome, lending the monument a timeless grandeur.' },
+            c: { front: null, back: null, left: null, right: 'a', text: 'Witness to Historical Events<br>The Gateway of India has witnessed several significant historical events, including the departure of British troops from India in 1948, marking the end of colonial rule. Over the years, it has also served as a ceremonial entrance for important dignitaries and a backdrop for various political and social movements, embedding itself deeply into the fabric of Indian history.' },
+            d: { front: null, back: null, left: 'a', right: null, text: 'A Hub for Tourists and Locals Alike<br>Today, the Gateway of India is one of Mumbai\'s most popular tourist attractions, drawing visitors from all over the world. The area around the monument is always bustling with activity, from street vendors selling souvenirs to photographers offering to capture the perfect shot. For many locals, the Gateway is a place to relax, enjoy the sea breeze, and take in the stunning views of the Mumbai skyline.' },
+            e: { front: 'a', back: null, left: null, right: null, text: 'Symbol of Resilience and Unity<br>Beyond its historical and architectural significance, the Gateway of India has come to symbolize the resilience and unity of the people of Mumbai. In times of crisis, such as the 2008 Mumbai attacks, the monument became a gathering place for citizens to mourn and stand in solidarity. It continues to be a powerful emblem of the city\'s enduring spirit and collective strength.' }
+        };
+        let currentLocation = 'a';
+        function updateView(location) {
+            document.getElementById('sky').setAttribute('src', `#${location}`);
+            const text = connections[location].text;
+            document.getElementById('text-overlay').innerHTML = text;
+            speakText(text.replace(/<br>/g, ' ')); // Speak the text without the <br> tags
+            currentLocation = location;
+        }
+        function speakText(text) {
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+        }
+        document.getElementById('front').addEventListener('click', function() {
+            if (connections[currentLocation].front) {
+                updateView(connections[currentLocation].front);
+            }
+        });
+        document.getElementById('back').addEventListener('click', function() {
+            if (connections[currentLocation].back) {
+                updateView(connections[currentLocation].back);
+            }
+        });
+        document.getElementById('left').addEventListener('click', function() {
+            if (connections[currentLocation].left) {
+                updateView(connections[currentLocation].left);
+            }
+        });
+        document.getElementById('right').addEventListener('click', function() {
+            if (connections[currentLocation].right) {
+                updateView(connections[currentLocation].right);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -6,66 +6,6 @@
     <title>360 Degree VR View</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="index.js" defer ></script>
-    <style>
-        /* Style the arrow buttons */
-        .arrow-button {
-            position: absolute;
-            color: aliceblue;
-            background-color: rgba(255, 255, 255, 0);
-            border: none;
-            cursor: pointer;
-            font-size: 24px; /* Increased font size for larger buttons */
-            padding: 25px;   /* Added padding for larger buttons */
-        }
-        #front {
-            top: 75%; /* Moved slightly upwards */
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        #back {
-            top: 78%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(180deg);
-            margin-top: 50px;
-        }
-        #left {
-            top: 80%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-90deg);
-            margin-left: -50px;
-        }
-        #right {
-            top: 80%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(90deg);
-            margin-left: 50px;
-        }
-        /* Text overlay style */
-        .text-overlay {
-            position: absolute;
-            border-radius: 20px;
-            top: 30px;
-            left: 30px;
-            opacity: 0.7;
-            right: 30px;
-            background-color: rgba(255, 255, 255, 0.8);
-            color: black;
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
-            box-sizing: border-box;
-            width: calc(100% - 60px); /* Adjust width to account for both left and right margins */
-            margin: 0 auto; /* Center the text overlay horizontally */
-        }
-
-        /* Hide text overlay on mobile devices */
-        @media only screen and (max-aspect-ratio: 13/9) { 
-            /* Change the aspect ratio as needed to match the mobile view you want */
-            .text-overlay {
-                display: none;
-            }
-        }
-    </style>
 </head>
 <body>
     <a-scene>

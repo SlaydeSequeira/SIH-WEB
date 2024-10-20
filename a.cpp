@@ -11,5 +11,5 @@ int main()
   s->top=0;
   s->a[s->top]=1;
   cout<<s->a[s->top];
-    return 0;
+    return 10;
 }
